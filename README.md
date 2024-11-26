@@ -4,7 +4,7 @@ destinations, including Google Drive, Telegram, or any rclone-supported cloud. I
 programming in Python.
 
 - **TELEGRAM CHANNEL >>** [Click Here](https://telegram.me/SPACE_X_BOTS)
-- **TELEGRAM GROUP >>:** [Click Here](https://telegram.me/SOURCES_CODES)
+- **TELEGRAM GROUP >>** [Click Here](https://telegram.me/SOURCES_CODES)
 
 # Features
 
