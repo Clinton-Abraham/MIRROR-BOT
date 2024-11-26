@@ -20,7 +20,6 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from pyrogram import Client as TgClient, enums
 from qbittorrentapi import Client as QbClient
-from sabnzbdapi import SabnzbdClient
 from socket import setdefaulttimeout
 from subprocess import Popen, run
 from time import time
@@ -83,8 +82,6 @@ except:
 task_dict_lock = Lock()
 queue_dict_lock = Lock()
 qb_listener_lock = Lock()
-nzb_listener_lock = Lock()
-jd_lock = Lock()
 cpu_eater_lock = Lock()
 subprocess_lock = Lock()
 same_directory_lock = Lock()
@@ -153,17 +150,12 @@ if DATABASE_URL:
 else:
     config_dict = {}
 
-if ospath.exists("cfg.zip"):
-    if ospath.exists("/JDownloader/cfg"):
-        rmtree("/JDownloader/cfg", ignore_errors=True)
-    run(["7z", "x", "cfg.zip", "-o/JDownloader"])
-    remove("cfg.zip")
 
 if not ospath.exists(".netrc"):
     with open(".netrc", "w"):
         pass
 run(
-    "chmod 600 .netrc && cp .netrc /root/.netrc && chmod +x aria-nox-nzb.sh && ./aria-nox-nzb.sh",
+    "chmod 600 .netrc && cp .netrc /root/.netrc",
     shell=True,
 )
 
@@ -523,13 +515,6 @@ qbittorrent_client = QbClient(
     },
 )
 
-sabnzbd_client = SabnzbdClient(
-    host="http://localhost",
-    api_key="mltb",
-    port="8070",
-)
-
-
 aria2c_global = [
     "bt-max-open-files",
     "download-result",
@@ -583,11 +568,3 @@ if not aria2_options:
 else:
     a2c_glo = {op: aria2_options[op] for op in aria2c_global if op in aria2_options}
     aria2.set_global_options(a2c_glo)
-
-
-async def get_nzb_options():
-    global nzb_options
-    nzb_options = (await sabnzbd_client.get_config())["config"]["misc"]
-
-
-bot_loop.run_until_complete(get_nzb_options())
