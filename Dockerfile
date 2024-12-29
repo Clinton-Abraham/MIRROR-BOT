@@ -1,4 +1,6 @@
-FROM dc4warrior/mltbs:latest 
+# https://hub.docker.com/r/dc4warrior/mltb
+
+FROM dc4warrior/mltb:alpine
 
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app
